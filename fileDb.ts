@@ -49,6 +49,26 @@ const fileDb = {
     return newCategory;
   },
 
+  async updateCategory(id: string, updatedCategory: Category) {
+    const index = categories.findIndex(cat => cat.id === id);
+    if (index !== -1) {
+      categories[index] = {...categories[index], ...updatedCategory};
+      await this.saveCategories();
+      return categories[index];
+    }
+    throw new Error('Category not found');
+  },
+
+  async deleteCategory(id: string) {
+    const index = categories.findIndex(cat => cat.id === id);
+    if (index !== -1) {
+      const deleted = categories.splice(index, 1)[0];
+      await this.saveCategories();
+      return deleted;
+    }
+    throw new Error('Category not found');
+  },
+
   async getLocations() {
     return locations;
   },
@@ -64,6 +84,26 @@ const fileDb = {
     return newLocation;
   },
 
+  async updateLocation(id: string, updatedLocation: Location) {
+    const index = locations.findIndex(loc => loc.id === id);
+    if (index !== -1) {
+      locations[index] = {...locations[index], ...updatedLocation};
+      await this.saveLocations();
+      return locations[index];
+    }
+    throw new Error('Location not found');
+  },
+
+  async deleteLocation(id: string) {
+    const index = locations.findIndex(loc => loc.id === id);
+    if (index !== -1) {
+      const deleted = locations.splice(index, 1)[0];
+      await this.saveLocations();
+      return deleted;
+    }
+    throw new Error('Location not found');
+  },
+
   async getItems() {
     return items;
   },
@@ -77,6 +117,26 @@ const fileDb = {
     items.push(newItem);
     await this.save('items.json', items);
     return newItem;
+  },
+
+  async updateItem(id: string, updatedItem: InventoryItem) {
+    const index = items.findIndex(it => it.id === id);
+    if (index !== -1) {
+      items[index] = {...items[index], ...updatedItem};
+      await this.saveItems();
+      return items[index];
+    }
+    throw new Error('Item not found');
+  },
+
+  async deleteItem(id: string) {
+    const index = items.findIndex(it => it.id === id);
+    if (index !== -1) {
+      const deleted = items.splice(index, 1)[0];
+      await this.saveItems();
+      return deleted;
+    }
+    throw new Error('Item not found');
   },
 
   async saveCategories() {
