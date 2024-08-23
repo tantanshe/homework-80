@@ -1,7 +1,7 @@
-import multer from 'multer'
+import multer from 'multer';
 import {promises as fs} from 'fs';
 import path from 'path';
-import { randomUUID } from 'crypto';
+import {randomUUID} from 'crypto';
 import config from './config';
 
 const imageStorage = multer.diskStorage({

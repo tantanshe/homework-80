@@ -45,7 +45,7 @@ const fileDb = {
       ...category
     };
     categories.push(newCategory);
-    await this.save('categories.json', categories);
+    await this.saveCategories();
     return newCategory;
   },
 
@@ -80,7 +80,7 @@ const fileDb = {
       ...location
     };
     locations.push(newLocation);
-    await this.save('locations.json', locations);
+    await this.saveLocations();
     return newLocation;
   },
 
@@ -108,6 +108,10 @@ const fileDb = {
     return items;
   },
 
+  async getItemById(id: string) {
+    return items.find(item => item.id === id);
+  },
+
   async addItem(item: InventoryItem) {
     const id = crypto.randomUUID();
     const newItem = {
@@ -115,7 +119,7 @@ const fileDb = {
       ...item
     };
     items.push(newItem);
-    await this.save('items.json', items);
+    await this.saveItems();
     return newItem;
   },
 
@@ -137,6 +141,16 @@ const fileDb = {
       return deleted;
     }
     throw new Error('Item not found');
+  },
+
+  async getItemsByCategoryId(categoryId: string) {
+    const items: InventoryItem[] = await this.getItems();
+    return items.filter(item => item.categoryId === categoryId);
+  },
+
+  async getItemsByLocationId(locationId: string) {
+    const items: InventoryItem[] = await this.getItems();
+    return items.filter(item => item.locationId === locationId);
   },
 
   async saveCategories() {

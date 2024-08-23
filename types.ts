@@ -1,17 +1,17 @@
 export interface Category {
-  id: string;
+  id?: string;
   name: string;
   description: string;
 }
 
 export interface Location {
-  id: string;
+  id?: string;
   name: string;
   description: string;
 }
 
 export interface InventoryItem {
-  id: string;
+  id?: string;
   categoryId: string;
   locationId: string;
   name: string;
